@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "argonauts"
-version = "0.1.0"
+version = "0.1.1"
 description = "Easily convert function to interactive command line applications"
 authors = ["Chandra Irugalbandara"]
 license = "MIT"

@@ -5,11 +5,15 @@
   [![PyPI version](https://badge.fury.io/py/argonauts.svg)](https://badge.fury.io/py/argonauts)
   [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
   [![Python Versions](https://img.shields.io/pypi/pyversions/argonauts.svg)](https://pypi.org/project/argonauts/)
-</div>
+
 
 ---
 
 Argonauts is a Python library that transforms your functions into interactive command-line interfaces with ease. Using simple decorators, you can create engaging CLI experiences without the hassle of manual argument parsing.
+
+![Argonauts Demo](public/demo_0.gif)
+
+</div>
 
 ## 🚀 Features
 
@@ -79,11 +83,9 @@ def order_pizza(
 order_pizza()
 ```
 
-[GIF placeholder: Show the code snippet side-by-side with a GIF of the resulting interactive CLI]
-
 ### Chaining Interactive Functions
 
-Astrolink allows you to chain multiple interactive functions with the ability to share the previous arguments:
+Argonauts allows you to chain multiple interactive functions with the ability to share the previous arguments:
 
 ```python
 from argonauts import argonaut, LogBook
@@ -110,7 +112,7 @@ def movie_night():
 movie_night()
 ```
 
-[GIF placeholder: Show the code snippet side-by-side with a GIF of the resulting chained interactive CLI]
+![Argonauts Demo](public/demo_1.gif)
 
 ## 🤝 Contributing
 
@@ -118,7 +120,7 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 ## 📄 License
 
-Astrolink is released under the MIT License. See the [LICENSE](LICENSE) file for details.
+Argonauts is released under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgements
 
