@@ -3,9 +3,11 @@
 import argparse
 import inspect
 from enum import Enum
-from typing import get_origin, get_args, Any, Callable
 from functools import wraps
+from typing import Any, Callable, get_args, get_origin
+
 import questionary
+
 from rich.console import Console
 
 console = Console()
@@ -15,26 +17,33 @@ class LogBook:
     """LogBook for storing previous arguments values."""
 
     def __init__(self) -> None:
+        """Initialize LogBook."""
         self.log = argparse.Namespace()
 
-    def __setitem__(self, key, value):
+    def __setitem__(self, key: str, value: Any) -> None:  # noqa
+        """Set item in LogBook."""
         setattr(self.log, key, value)
 
-    def __getitem__(self, key):
+    def __getitem__(self, key: str) -> Any:  # noqa
+        """Get item from LogBook."""
         return getattr(self.log, key)
 
-    def __getattribute__(self, name: str) -> Any:
+    def __getattribute__(self, name: str) -> Any:  # noqa
+        """Get attribute from LogBook."""
         if name == "log":
             return super().__getattribute__(name)
         return getattr(self.log, name)
 
     def __repr__(self) -> str:
+        """Representation of LogBook."""
         attr_str = ", ".join([f"{k}={v}" for k, v in self.log.__dict__.items()])
         return f"LogBook({attr_str})"
 
 
-def interactive(
-    logbook: LogBook | None = None, include_params: list = [], process_name: str = ""
+def argonaut(
+    logbook: LogBook | None = None,
+    include_params: list | None = None,
+    process_name: str | None = None,
 ) -> Callable:
     """Decorator of Interactive Arguments using questionary."""
 
@@ -45,7 +54,7 @@ def interactive(
         def wrapper(*args: list, **kwargs: dict) -> Any:  # noqa
             """Wrapper of Interactive Arguments."""
             sig = inspect.signature(func)
-            params = sig.parameters
+            params = dict(sig.parameters)
             doc_string = func.__doc__
             if doc_string:
                 console.print(f"\n{doc_string}\n", style="bold")
@@ -62,7 +71,7 @@ def interactive(
                         logbook[name] = kwargs[name] if name in kwargs else None
             print()
             with console.status(
-                f"Running {func.__name__}..." if not process_name else process_name
+                process_name if process_name else f"Running {func.__name__}..."
             ):
                 output = func(*args, **kwargs)
             return output
@@ -139,13 +148,3 @@ def convert_value(value: Any, annotation: Any) -> Any:  # noqa
         return float(value)
     else:
         return value
-
-
-def non_interactive(func: Callable) -> Callable:
-    """Decorator for non-interactive functions."""
-
-    @wraps(func)
-    def wrapper(*args, **kwargs):
-        return func(*args, **kwargs)
-
-    return wrapper

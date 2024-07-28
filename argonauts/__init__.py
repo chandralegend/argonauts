@@ -1,5 +1,5 @@
 """Argonauts: Easy Interactive or Non-Interactive CLI Arguments."""
 
-from argonauts.decorators import interactive, LogBook
+from argonauts.decorators import LogBook, argonaut
 
-__all__ = ["interactive", "LogBook"]
+__all__ = ["argonaut", "LogBook"]
