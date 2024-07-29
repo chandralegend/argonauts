@@ -134,6 +134,7 @@ def configure(config_path: Path):
     """Load configurations from a file."""
     ...
 ```
+![Argonauts Demo](public/demo_2.gif)
 
 You can customize these Input types by inhereting them and overriding the `validate` method:
 
