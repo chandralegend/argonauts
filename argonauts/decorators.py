@@ -6,6 +6,8 @@ from enum import Enum
 from functools import wraps
 from typing import Any, Callable, get_args, get_origin
 
+from argonauts.inputs import Email, Password, Path
+
 import questionary
 
 from rich.console import Console
@@ -130,6 +132,34 @@ def create_prompt(name: str, param: inspect.Parameter) -> Any:  # noqa
             default=default if default is not None else "",
             validate=lambda text: text.replace(".", "", 1).isdigit()
             or "Please enter a valid float.",
+        ).ask()
+    if annotation == list:
+        return (
+            questionary.text(
+                f"Enter {name} (comma separated):",
+                default=", ".join(default) if default is not None else "",
+                validate=lambda text: len(text) > 0 or f"Please enter a valid {name}.",
+            )
+            .ask()
+            .split(", ")
+        )
+    if annotation == Path:
+        return questionary.path(
+            f"Enter {name}:",
+            default=default if default is not None else "",
+            validate=lambda path: Path.validate(path)
+            or f"Please enter a valid {name}.",
+        ).ask()
+    if annotation == Password:
+        return questionary.password(
+            f"Enter {name}:",
+            validate=lambda text: len(text) > 0 or f"Please enter a valid {name}.",
+        ).ask()
+    if annotation == Email:
+        return questionary.text(
+            f"Enter {name}:",
+            validate=lambda text: Email.validate(text)
+            or f"Please enter a valid {name}.",
         ).ask()
 
     raise ValueError(f"Unsupported type: {annotation}")

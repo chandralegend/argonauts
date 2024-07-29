@@ -19,6 +19,8 @@ Argonauts is a Python library that transforms your functions into interactive co
 
 - Transform functions into interactive CLIs with a single decorator
 - Automatic type inference and validation
+- Email, Password Support with validation
+- Path Support with Autosuggestion
 - Chainable interactive functions
 
 ## 📦 Installation
@@ -113,6 +115,35 @@ movie_night()
 ```
 
 ![Argonauts Demo](public/demo_1.gif)
+
+### Email, Password, and Path Support
+
+Argonauts provides built-in support for email, password, and path inputs with validation:
+
+```python
+from argonauts import argonaut
+from argonauts.inputs import Email, Password, Path
+
+@argonaut(process_name="Please wait...")
+def login(email: Email, password: Password):
+    """Login with email and password."""
+    ...
+
+@argonaut(process_name="Loading Configurations...")
+def configure(config_path: Path):
+    """Load configurations from a file."""
+    ...
+```
+
+You can customize these Input types by inhereting them and overriding the `validate` method:
+
+```python
+from argonauts.inputs import Path
+
+class JSONFile(Path):
+    def validate(self, value: str) -> bool:
+        return super().validate(value) and value.endswith(".json")
+```
 
 ## 🤝 Contributing
 
