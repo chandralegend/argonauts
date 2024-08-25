@@ -46,8 +46,10 @@ pip install .
 Here's a simple example of how to use Argonaut:
 
 ```python
-from argonauts import argonaut
 from enum import Enum
+import time
+
+from argonauts import argonaut
 
 class PizzaSize(Enum):
     SMALL = "Small"
@@ -75,7 +77,7 @@ def order_pizza(
         pizza += " and extra cheese"
     print(f"You've ordered: {pizza}")
 
-    time.sleep(20)  # Simulate making the pizza
+    time.sleep(3)  # Simulate making the pizza
 
     if delivery:
         print("Your pizza will be delivered soon!")
